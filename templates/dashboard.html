@@ -1,79 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>ResiAlert Dashboard</title>
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             background: #f4f4f4;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
         }
 
-        h1 {
-            color: #333;
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
         }
 
         .card {
             background: white;
             padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .status {
+        .type {
             font-weight: bold;
+            color: #e74c3c;
         }
 
-        .pending {
-            color: red;
+        .room {
+            color: #2980b9;
         }
 
-        .resolved {
-            color: green;
+        .empty {
+            text-align: center;
+            color: gray;
+            margin-top: 50px;
         }
 
-        button {
-            padding: 6px 12px;
-            border: none;
-            background: #007bff;
+        a {
             color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #0056b3;
+            float: right;
+            margin-right: 20px;
+            text-decoration: none;
         }
     </style>
 </head>
-
 <body>
 
-    <h1>🏠 ResiAlert Landlord Dashboard</h1>
+<div class="header">
+    ResiAlert Dashboard
     <a href="/logout">Logout</a>
-    {% if complaints|length == 0 %}
-        <p>No complaints yet.</p>
+</div>
+
+<div class="container">
+
+    {% if issues and issues|length > 0 %}
+
+        {% for issue in issues %}
+        <div class="card">
+            <div class="room">Room: {{ issue.room }}</div>
+            <div class="type">Issue: {{ issue.type }}</div>
+        </div>
+        {% endfor %}
+
+    {% else %}
+        <div class="empty">
+            No issues reported yet.
+        </div>
     {% endif %}
 
-    {% for c in complaints %}
-    <div class="card">
-        <p><b>ID:</b> {{ c.id }}</p>
-        <p><b>Room:</b> {{ c.room }}</p>
-        <p><b>Issue:</b> {{ c.issue }}</p>
-        <p><b>Time:</b> {{ c.time }}</p>
-
-        {% if c.status == "Resolved" %}
-            <p class="status resolved">Status: Resolved</p>
-        {% else %}
-            <p class="status pending">Status: Pending</p>
-
-            <form method="post" action="/resolve/{{ c.id }}">
-                <button type="submit">Mark as Resolved</button>
-            </form>
-        {% endif %}
-    </div>
-    {% endfor %}
+</div>
 
 </body>
 </html>
