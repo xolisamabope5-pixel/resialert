@@ -1,41 +1,31 @@
 import requests
 
-DEVICES = {
-    "1": {"room": "101", "name": "Room 101 Device"},
-    "2": {"room": "223", "name": "Room 223 Device"},
-    "3": {"room": "305", "name": "Room 305 Device"},
-}
+API_URL = "https://resialert.onrender.com/api/issue"
 
-def send_issue(room, issue):
-    data = {
+def send_issue(room, issue_type):
+    payload = {
         "room": room,
-        "issue": issue,
-        "device_id": f"esp32_room_{room}"
+        "type": issue_type
     }
 
-    response = requests.post(
-        "http://127.0.0.1:5000/report",
-        json=data,
-        timeout=5
-    )
+    try:
+        response = requests.post(API_URL, json=payload)
 
-    print("\nResponse:", response.json())
+        try:
+            print("\nResponse:", response.json())
+        except Exception:
+            print("\nResponse (not JSON):", response.text)
+
+    except Exception as e:
+        print("Request failed:", e)
 
 
-print("SELECT DEVICE")
-for key, device in DEVICES.items():
-    print(f"{key}. {device['name']}")
-
-device_choice = input("\nChoose device: ")
-
-if device_choice not in DEVICES:
-    print("Invalid device")
-    exit()
-
-room = DEVICES[device_choice]["room"]
+# ----------------------------
+# SIMPLE TEST MENU
+# ----------------------------
 
 while True:
-    print(f"\nRESIALERT - {room}")
+    print("\nRESIALERT")
     print("1. Electricity")
     print("2. Water")
     print("3. Internet")
@@ -44,20 +34,17 @@ while True:
 
     choice = input("Press button: ")
 
-    if choice == "1":
-        send_issue(room, "Electricity")
-
-    elif choice == "2":
-        send_issue(room, "Water")
-
-    elif choice == "3":
-        send_issue(room, "Internet")
-
-    elif choice == "4":
-        send_issue(room, "Other")
-
-    elif choice == "5":
+    if choice == "5":
         break
 
-    else:
-        print("Invalid button")
+    room = input("Enter room number: ")
+
+    mapping = {
+        "1": "Electricity",
+        "2": "Water",
+        "3": "Internet",
+        "4": "Other"
+    }
+
+    issue = mapping.get(choice, "Other")
+    send_issue(room, issue)

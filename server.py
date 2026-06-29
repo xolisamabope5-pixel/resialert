@@ -1,11 +1,11 @@
 import os
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 
 app = Flask(__name__)
 app.secret_key = "resialert_secret_key"
 
 # ----------------------------
-# ROUTES
+# WEB PAGES
 # ----------------------------
 
 @app.route("/")
@@ -19,7 +19,6 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        # simple demo login (you can improve later)
         if username == "admin" and password == "admin":
             session["user"] = username
             return redirect("/dashboard")
@@ -44,7 +43,31 @@ def logout():
 
 
 # ----------------------------
-# RUN (IMPORTANT FOR RENDER)
+# API (FOR DEVICE MANAGER)
+# ----------------------------
+
+@app.route("/api/issue", methods=["POST"])
+def api_issue():
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"status": "error", "message": "No data received"}), 400
+
+    room = data.get("room")
+    issue_type = data.get("type")
+
+    print(f"[ISSUE RECEIVED] Room: {room}, Type: {issue_type}")
+
+    return jsonify({
+        "status": "success",
+        "message": "Issue received",
+        "room": room,
+        "type": issue_type
+    })
+
+
+# ----------------------------
+# RUN (RENDER READY)
 # ----------------------------
 
 if __name__ == "__main__":
