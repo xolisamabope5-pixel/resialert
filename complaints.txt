@@ -1,0 +1,93 @@
+
+RESIALERT COMPLAINT
+-------------------
+Issue: Electricity
+Room: 223
+Status: Submitted
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Issue: Water
+Room: 515
+Status: Submitted
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Issue: Electricity
+Room: 123
+Status: Submitted
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Room: 223
+Issue: Electricity
+Time: 2026-06-28 01:02:57
+Status: Pending
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Device ID: test-device-1
+Room: 223
+Issue: Electricity
+Time: 2026-06-28 01:23:33
+Status: Pending
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Device ID: test-device-1
+Room: 223
+Issue: Electricity
+Time: 2026-06-28 01:27:21
+Status: Pending
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Device ID: esp32_room_223
+Room: 223
+Issue: Electricity
+Time: 2026-06-28 01:37:00
+Status: Pending
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Device ID: esp32_room_223
+Room: 223
+Issue: Internet
+Time: 2026-06-28 01:39:02
+Status: Pending
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Device ID: esp32_room_223
+Room: 223
+Issue: Electricity
+Time: 2026-06-28 01:45:39
+Status: Pending
+
+
+
+RESIALERT COMPLAINT
+-------------------
+Device ID: esp32_room_305
+Room: 305
+Issue: Internet
+Time: 2026-06-28 01:49:38
+Status: Pending
+
+

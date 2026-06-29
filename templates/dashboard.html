@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ResiAlert Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .pending {
+            color: red;
+        }
+
+        .resolved {
+            color: green;
+        }
+
+        button {
+            padding: 6px 12px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🏠 ResiAlert Landlord Dashboard</h1>
+    <a href="/logout">Logout</a>
+    {% if complaints|length == 0 %}
+        <p>No complaints yet.</p>
+    {% endif %}
+
+    {% for c in complaints %}
+    <div class="card">
+        <p><b>ID:</b> {{ c.id }}</p>
+        <p><b>Room:</b> {{ c.room }}</p>
+        <p><b>Issue:</b> {{ c.issue }}</p>
+        <p><b>Time:</b> {{ c.time }}</p>
+
+        {% if c.status == "Resolved" %}
+            <p class="status resolved">Status: Resolved</p>
+        {% else %}
+            <p class="status pending">Status: Pending</p>
+
+            <form method="post" action="/resolve/{{ c.id }}">
+                <button type="submit">Mark as Resolved</button>
+            </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+</body>
+</html>
